@@ -28,7 +28,7 @@ axiosInstance.interceptors.response.use(
     const data = error.response?.data
     const code = data?.code
     requestEventBus.emit({ type: 'responseError', error, code })
-    if (error.response?.status === 400 && data?.message === '未登录') {
+    if (error.response?.status === 400 && data?.message?.includes?.('token')) {
       localStorage.removeItem('token')
       localStorage.removeItem('user')
       window.location.href = '/sign-in'
