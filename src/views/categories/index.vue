@@ -92,7 +92,6 @@ watch(data, (newData) => {
 })
 
 const columns = [
-  { type: 'expand', width: 40 },
   { key: 'id', title: 'ID', width: 60 },
   { key: 'name', title: '分类名称', width: 200 },
   { key: 'sort', title: '排序', width: 80 },

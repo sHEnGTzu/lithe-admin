@@ -8,6 +8,7 @@ import {
   LegendComponent,
   TitleComponent,
   TooltipComponent,
+  LegacyGridContainLabel,
 } from 'echarts/components'
 import { init, use } from 'echarts/core'
 import { CanvasRenderer } from 'echarts/renderers'
@@ -48,6 +49,7 @@ use([
   TitleComponent,
   AxisPointerComponent,
   CanvasRenderer,
+  LegacyGridContainLabel,
 ])
 
 type DashboardCartesianComponentOption =
