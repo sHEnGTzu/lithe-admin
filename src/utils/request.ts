@@ -25,8 +25,14 @@ axiosInstance.interceptors.response.use(
     return response
   },
   (error) => {
-    const code = error.response?.data?.code
+    const data = error.response?.data
+    const code = data?.code
     requestEventBus.emit({ type: 'responseError', error, code })
+    if (error.response?.status === 400 && data?.message === '未登录') {
+      localStorage.removeItem('token')
+      localStorage.removeItem('user')
+      window.location.href = '/sign-in'
+    }
     return Promise.reject(error)
   },
 )

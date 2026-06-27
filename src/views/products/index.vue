@@ -83,11 +83,12 @@ watch(catData, (d) => {
 const { mutate: handleDelete } = useMutation({
   mutation: (id: number) => deleteProduct(id),
   onSuccess: () => { message.success('已删除'); refetch() },
+  onError: (err: any) => { message.error(err?.response?.data?.message || '删除失败') },
 })
 
 const { mutate: handleSave } = useMutation({
   mutation: () => {
-    const d = { name: form.value.name, description: form.value.description || undefined, price: form.value.price, stock: form.value.stock, image: form.value.image || undefined, categoryId: form.value.categoryId! }
+    const d = { name: form.value.name, description: form.value.description || undefined, price: Number(form.value.price), stock: form.value.stock, image: form.value.image || undefined, categoryId: form.value.categoryId! }
     return editingId.value ? updateProduct(editingId.value, d) : createProduct(d)
   },
   onSuccess: () => {
@@ -95,6 +96,7 @@ const { mutate: handleSave } = useMutation({
     modalVisible.value = false
     refetch()
   },
+  onError: (err: any) => { message.error(err?.response?.data?.message || '操作失败') },
 })
 
 function openAdd() {
@@ -167,7 +169,7 @@ const columns: DataTableColumns<ProductVO> = [
       <NForm label-placement="left" label-width="80">
         <NFormItem label="商品名称"><NInput v-model:value="form.name" placeholder="请输入商品名称" /></NFormItem>
         <NFormItem label="商品分类"><NSelect v-model:value="form.categoryId" :options="categoryOptions" placeholder="请选择分类" /></NFormItem>
-        <NFormItem label="价格"><NInput v-model:value="form.price" placeholder="0.00" /></NFormItem>
+        <NFormItem label="价格"><NInputNumber v-model:value="form.price" placeholder="0.00" :min="0.01" :step="0.01" style="width: 100%" /></NFormItem>
         <NFormItem label="库存"><NInputNumber v-model:value="form.stock" placeholder="0" :min="0" style="width: 100%" /></NFormItem>
         <NFormItem label="图片"><NInput v-model:value="form.image" placeholder="图片URL（可选）" /></NFormItem>
         <NFormItem label="描述"><NInput v-model:value="form.description" type="textarea" placeholder="商品描述（可选）" /></NFormItem>

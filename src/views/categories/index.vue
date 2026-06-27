@@ -56,6 +56,7 @@ const { data, refetch } = useQuery({
 const { mutate: handleDelete } = useMutation({
   mutation: (id: number) => deleteCategory(id),
   onSuccess: () => { message.success('已删除'); refetch() },
+  onError: (err: any) => { message.error(err?.response?.data?.message || '删除失败') },
 })
 
 const { mutate: handleSave } = useMutation({
@@ -68,6 +69,7 @@ const { mutate: handleSave } = useMutation({
     modalVisible.value = false
     refetch()
   },
+  onError: (err: any) => { message.error(err?.response?.data?.message || '操作失败') },
 })
 
 function openAdd(parentId: number | null = null) {

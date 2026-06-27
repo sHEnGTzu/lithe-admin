@@ -78,6 +78,7 @@ const { data, isLoading: loading, refetch } = useQuery({
 const { mutate: mutateStatus } = useMutation({
   mutation: (params: { id: number; status: string }) => updateOrderStatus(params.id, params.status),
   onSuccess: () => { message.success('操作成功'); refetch() },
+  onError: (err: any) => { message.error(err?.response?.data?.message || '操作失败') },
 })
 
 const nextStatusMap: Record<string, string> = {
